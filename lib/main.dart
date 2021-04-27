@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter/material.dart'; // Material package from Flutter
+import 'package:google_fonts/google_fonts.dart'; // Google fonts package for using fonts
 
 void main() {
   runApp(MyApp());
