@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart'; // Material package from Flutter
 import 'package:google_fonts/google_fonts.dart'; // Google fonts package for using fonts
+import 'models/constants.dart';
 
 void main() {
   runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   // This widget is the root of your application.
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -29,7 +35,7 @@ class MyApp extends StatelessWidget {
                     ],
                   ),
                   Container(
-                      height: 130,
+                      height: 160,
                       decoration: BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.only(
@@ -42,13 +48,23 @@ class MyApp extends StatelessWidget {
                             padding: const EdgeInsets.only(left: 30),
                             child: Text(
                               'Intray',
-                              style: GoogleFonts.openSans(
-                                  fontSize: 40, fontWeight: FontWeight.w500),
+                              style: intrayTitleStyle,
                             ),
                           ),
-                          Container()
+                          Container(),
                         ],
-                      ))
+                      )),
+                  Container(
+                    height: 70,
+                    width: 70,
+                    margin: EdgeInsets.only(
+                        top: 120,
+                        left: MediaQuery.of(context).size.width * 0.5),
+                    child: FloatingActionButton(
+                        backgroundColor: redColor,
+                        child: Icon(Icons.add, size: 40),
+                        onPressed: () {}),
+                  )
                 ]),
                 appBar: AppBar(
                   elevation: 0,
