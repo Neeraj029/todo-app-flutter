@@ -1,26 +1,49 @@
+import 'dart:async';
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:todaydos/models/constants.dart'; // Material package from Flutter
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class Intray extends StatelessWidget {
-  FirebaseFirestore firestore = FirebaseFirestore.instance;
+class Intray extends StatefulWidget {
+  @override
+  _IntrayState createState() => _IntrayState();
+}
+
+class _IntrayState extends State<Intray> {
+  FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+
+  Future<String> data() async {
+    await firebaseFirestore.collection("todos").get().then((querySnapshot) {
+      querySnapshot.docs.forEach((result) {
+        return result.data();
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    firestore.collection("users").get().then((querySnapshot) {
-      querySnapshot.docs.forEach((result) {
-        print(result.data());
-      });
-    });
-    return Container(
-        padding: EdgeInsets.only(top: 200),
-        height: 100,
-        width: 100,
-        decoration: BoxDecoration(color: darkGreyColor),
-        child: ListView(
-          children: getList(),
-        ));
+    return Stack(
+      children: [
+        ListTile(
+          title: FutureBuilder(
+            future: data(),
+            builder: (BuildContext context, AsyncSnapshot snapshot) {
+              print(snapshot.data.toString());
+              return Text('Hi');
+            },
+          ),
+        ),
+        Container(
+            padding: EdgeInsets.only(top: 200),
+            height: 100,
+            width: 100,
+            decoration: BoxDecoration(color: darkGreyColor),
+            child: ListView(
+              children: getList(),
+            ))
+      ],
+    );
   }
 
   List<Widget> getList() {

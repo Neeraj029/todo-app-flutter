@@ -4,11 +4,7 @@ import 'models/constants.dart';
 import 'ui/intray_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 
-void main() async => {
-      WidgetsFlutterBinding.ensureInitialized(),
-      await Firebase.initializeApp(),
-      runApp(MaterialApp(home: MyApp()))
-    };
+void main() async => {runApp(MaterialApp(home: MyApp()))};
 
 class MyApp extends StatefulWidget {
   // This widget is the root of your application
@@ -17,6 +13,12 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  @override
+  initState() {
+    super.initState();
+    Firebase.initializeApp();
+  }
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
