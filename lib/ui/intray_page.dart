@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:todaydos/models/constants.dart'; // Material package from Flutter
@@ -11,6 +9,12 @@ class Intray extends StatefulWidget {
 }
 
 class _IntrayState extends State<Intray> {
+  @override
+  initState() {
+    super.initState();
+    Firebase.initializeApp();
+  }
+
   FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
 
   Future<String> data() async {
@@ -25,23 +29,23 @@ class _IntrayState extends State<Intray> {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        ListTile(
-          title: FutureBuilder(
-            future: data(),
-            builder: (BuildContext context, AsyncSnapshot snapshot) {
-              print(snapshot.data.toString());
-              return Text('Hi');
-            },
-          ),
+        StreamBuilder(
+          stream: firebaseFirestore.collection('todos').snapshots(),
+          builder: (context, snapshot) {
+            List listTodos = snapshot.data.docs;
+            print(snapshot.data.docs[0]['title']);
+            ListView.builder(
+              itemBuilder: (context, index) {
+                return ListTile(
+                    title: Text(listTodos[index]['title'].toString()));
+              },
+              itemCount: listTodos.length,
+            );
+            return Container(
+                // child: Text(listTodos[0]['title'].toString()),
+                );
+          },
         ),
-        Container(
-            padding: EdgeInsets.only(top: 200),
-            height: 100,
-            width: 100,
-            decoration: BoxDecoration(color: darkGreyColor),
-            child: ListView(
-              children: getList(),
-            ))
       ],
     );
   }

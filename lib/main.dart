@@ -38,37 +38,37 @@ class _MyAppState extends State<MyApp> {
                   ),
                 ],
               ),
-              Container(
-                  height: 160,
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.only(
-                          bottomLeft: Radius.circular(60),
-                          bottomRight: Radius.circular(60))),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(left: 30),
-                        child: Text(
-                          'Intray',
-                          style: intrayTitleStyle,
-                        ),
-                      ),
-                      Container(),
-                    ],
-                  )),
-              Container(
-                height: 70,
-                width: 70,
-                margin: EdgeInsets.only(
-                    top: 120,
-                    left: MediaQuery.of(context).size.width * 0.5 - 40),
-                child: FloatingActionButton(
-                    backgroundColor: redColor,
-                    child: Icon(Icons.add, size: 40),
-                    onPressed: () {}),
-              ),
+              // Container(
+              //     height: 160,
+              //     decoration: BoxDecoration(
+              //         color: Colors.white,
+              //         borderRadius: BorderRadius.only(
+              //             bottomLeft: Radius.circular(60),
+              //             bottomRight: Radius.circular(60))),
+              //     child: Row(
+              //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //       children: [
+              //         Padding(
+              //           padding: const EdgeInsets.only(left: 30),
+              //           child: Text(
+              //             'Intray',
+              //             style: intrayTitleStyle,
+              //           ),
+              //         ),
+              //         Container(),
+              //       ],
+              //     )),
+              // Container(
+              //   height: 70,
+              //   width: 70,
+              //   margin: EdgeInsets.only(
+              //       top: 120,
+              //       left: MediaQuery.of(context).size.width * 0.5 - 40),
+              //   child: FloatingActionButton(
+              //       backgroundColor: redColor,
+              //       child: Icon(Icons.add, size: 40),
+              //       onPressed: () {}),
+              // ),
             ],
           ),
           appBar: AppBar(
