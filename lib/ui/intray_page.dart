@@ -17,37 +17,35 @@ class _IntrayState extends State<Intray> {
 
   FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
 
-  Future<String> data() async {
-    await firebaseFirestore.collection("todos").get().then((querySnapshot) {
-      querySnapshot.docs.forEach((result) {
-        return result.data();
-      });
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        StreamBuilder(
+    return Container(
+        decoration: BoxDecoration(color: darkGreyColor),
+        padding: EdgeInsets.only(top: 200),
+        child: StreamBuilder(
           stream: firebaseFirestore.collection('todos').snapshots(),
           builder: (context, snapshot) {
             List listTodos = snapshot.data.docs;
-            print(snapshot.data.docs[0]['title']);
-            ListView.builder(
-              itemBuilder: (context, index) {
-                return ListTile(
-                    title: Text(listTodos[index]['title'].toString()));
-              },
+            return ListView.builder(
               itemCount: listTodos.length,
+              itemBuilder: (context, index) {
+                DocumentSnapshot ds = snapshot.data.docs[index];
+                return Container(
+                    height: 100,
+                    child: Text(
+                      ds['title'],
+                      style: TextStyle(fontSize: 26, color: darkGreyColor),
+                    ),
+                    alignment: Alignment.centerLeft,
+                    padding: EdgeInsets.only(left: 20),
+                    decoration: BoxDecoration(
+                        color: Colors.red,
+                        borderRadius: BorderRadius.all(Radius.circular(10))),
+                    margin: EdgeInsets.all(14));
+              },
             );
-            return Container(
-                // child: Text(listTodos[0]['title'].toString()),
-                );
           },
-        ),
-      ],
-    );
+        ));
   }
 
   List<Widget> getList() {

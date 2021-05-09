@@ -3,8 +3,9 @@ import 'package:google_fonts/google_fonts.dart'; // Google fonts package for usi
 import 'models/constants.dart';
 import 'ui/intray_page.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
-void main() async => {runApp(MaterialApp(home: MyApp()))};
+void main() => {runApp(MaterialApp(home: MyApp()))};
 
 class MyApp extends StatefulWidget {
   // This widget is the root of your application
@@ -17,6 +18,12 @@ class _MyAppState extends State<MyApp> {
   initState() {
     super.initState();
     Firebase.initializeApp();
+  }
+
+  FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+
+  void addTodos() {
+    // firebaseFirestore.collection('todos').add({'title': 'Lets goo'});
   }
 
   @override
@@ -38,37 +45,37 @@ class _MyAppState extends State<MyApp> {
                   ),
                 ],
               ),
-              // Container(
-              //     height: 160,
-              //     decoration: BoxDecoration(
-              //         color: Colors.white,
-              //         borderRadius: BorderRadius.only(
-              //             bottomLeft: Radius.circular(60),
-              //             bottomRight: Radius.circular(60))),
-              //     child: Row(
-              //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              //       children: [
-              //         Padding(
-              //           padding: const EdgeInsets.only(left: 30),
-              //           child: Text(
-              //             'Intray',
-              //             style: intrayTitleStyle,
-              //           ),
-              //         ),
-              //         Container(),
-              //       ],
-              //     )),
-              // Container(
-              //   height: 70,
-              //   width: 70,
-              //   margin: EdgeInsets.only(
-              //       top: 120,
-              //       left: MediaQuery.of(context).size.width * 0.5 - 40),
-              //   child: FloatingActionButton(
-              //       backgroundColor: redColor,
-              //       child: Icon(Icons.add, size: 40),
-              //       onPressed: () {}),
-              // ),
+              Container(
+                  height: 160,
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.only(
+                          bottomLeft: Radius.circular(60),
+                          bottomRight: Radius.circular(60))),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(left: 30),
+                        child: Text(
+                          'Intray',
+                          style: intrayTitleStyle,
+                        ),
+                      ),
+                      Container(),
+                    ],
+                  )),
+              Container(
+                height: 70,
+                width: 70,
+                margin: EdgeInsets.only(
+                    top: 120,
+                    left: MediaQuery.of(context).size.width * 0.5 - 40),
+                child: FloatingActionButton(
+                    backgroundColor: redColor,
+                    child: Icon(Icons.add, size: 40),
+                    onPressed: addTodos),
+              ),
             ],
           ),
           appBar: AppBar(
