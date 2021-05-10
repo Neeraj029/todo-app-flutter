@@ -20,9 +20,78 @@ class _MyAppState extends State<MyApp> {
     Firebase.initializeApp();
   }
 
-  FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+  // FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
 
   void addTodos() {
+    print('opening dialog');
+    TextEditingController taskName = new TextEditingController();
+    TextEditingController deadline = new TextEditingController();
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+        return AlertDialog(
+          backgroundColor: Colors.transparent,
+          content: Container(
+            padding: EdgeInsets.all(20),
+            constraints: BoxConstraints.expand(
+              height: 220,
+            ),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(13)),
+                color: darkGreyColor),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                Text("Add New Task",
+                    style: TextStyle(
+                      color: Colors.white,
+                    )),
+                Container(
+                  child: TextField(
+                    style: TextStyle(color: Colors.white),
+                    controller: taskName,
+                    decoration: InputDecoration(
+                      hintStyle: TextStyle(color: Colors.white),
+                      hintText: "Name of task",
+                      enabledBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: Colors.white),
+                      ),
+                    ),
+                  ),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    RaisedButton(
+                      color: redColor,
+                      child: Text("Cancel"),
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                    ),
+                    TextButton(
+                      child: Text(
+                        "Add",
+                      ),
+                      onPressed: () {
+                        FirebaseFirestore.instance
+                            .collection('todos')
+                            .add({"title": taskName.text});
+                      },
+                    ),
+                  ],
+                )
+              ],
+            ),
+          ),
+        );
+      },
+    );
+
     // firebaseFirestore.collection('todos').add({'title': 'Lets goo'});
   }
 
