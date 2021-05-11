@@ -23,69 +23,46 @@ class _IntrayState extends State<Intray> {
         decoration: BoxDecoration(color: darkGreyColor),
         padding: EdgeInsets.only(top: 200),
         child: StreamBuilder(
-          stream: firebaseFirestore.collection('todos').snapshots(),
-          builder: (context, snapshot) {
-            List listTodos = snapshot.data.docs;
-            return ListView.builder(
-              itemCount: listTodos.length,
-              itemBuilder: (context, index) {
-                DocumentSnapshot ds = snapshot.data.docs[index];
-                return Container(
-                    height: 100,
-                    child: Text(
-                      ds['title'],
-                      style: TextStyle(fontSize: 26, color: darkGreyColor),
-                    ),
-                    alignment: Alignment.centerLeft,
-                    padding: EdgeInsets.only(left: 20),
-                    decoration: BoxDecoration(
-                        color: Colors.red,
-                        borderRadius: BorderRadius.all(Radius.circular(10))),
-                    margin: EdgeInsets.all(14));
-              },
-            );
-          },
-        ));
-  }
+            stream: firebaseFirestore.collection('todos').snapshots(),
+            builder: (context, snapshot) {
+              List listTodos = snapshot.data.docs;
+              return ListView.builder(
+                itemCount: listTodos.length,
+                itemBuilder: (context, index) {
+                  DocumentSnapshot ds = snapshot.data.docs[index];
+                  return Dismissible(
+                      key: Key(UniqueKey().toString()),
+                      onDismissed: (DismissDirection direction) {
+                        if (direction == DismissDirection.startToEnd) {
+                          print('added');
+                        } else {
+                          firebaseFirestore
+                              .collection('todos')
+                              .doc(listTodos[index]['id'])
+                              .delete();
+                        }
 
-  List<Widget> getList() {
-    return [
-      Container(
-          height: 100,
-          child: Text(
-            'Buy Minecraft',
-            style: TextStyle(fontSize: 26, color: darkGreyColor),
-          ),
-          alignment: Alignment.centerLeft,
-          padding: EdgeInsets.only(left: 20),
-          decoration: BoxDecoration(
-              color: Colors.red,
-              borderRadius: BorderRadius.all(Radius.circular(10))),
-          margin: EdgeInsets.all(14)),
-      Container(
-          height: 100,
-          child: Text(
-            'Buy Minecraft',
-            style: TextStyle(fontSize: 26, color: darkGreyColor),
-          ),
-          alignment: Alignment.centerLeft,
-          padding: EdgeInsets.only(left: 20),
-          decoration: BoxDecoration(
-              color: Colors.red,
-              borderRadius: BorderRadius.all(Radius.circular(10))),
-          margin: EdgeInsets.all(14)),
-      Container(
-          height: 100,
-          child: Text(
-            'Buy Minecraft',
-            style: TextStyle(fontSize: 26, color: darkGreyColor),
-          ),
-          alignment: Alignment.centerLeft,
-          padding: EdgeInsets.only(left: 20),
-          decoration: BoxDecoration(
-              color: Colors.red,
-              borderRadius: BorderRadius.all(Radius.circular(10))),
-          margin: EdgeInsets.all(14)),
-    ];
+                        setState(() {
+                          listTodos.removeAt(index);
+                        });
+                      },
+                      child: ListTile(
+                          title: Container(
+                              height: 100,
+                              child: Text(
+                                ds['title'],
+                                style: TextStyle(
+                                    fontSize: 26, color: darkGreyColor),
+                              ),
+                              alignment: Alignment.centerLeft,
+                              padding: EdgeInsets.only(left: 20),
+                              decoration: BoxDecoration(
+                                  color: Colors.red,
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(10))),
+                              margin: EdgeInsets.all(14))));
+                },
+              );
+            }));
   }
 }

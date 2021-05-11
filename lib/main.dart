@@ -80,7 +80,11 @@ class _MyAppState extends State<MyApp> {
                       onPressed: () {
                         FirebaseFirestore.instance
                             .collection('todos')
-                            .add({"title": taskName.text});
+                            .add({"title": taskName.text}).then((dbref) => {
+                                  dbref.set(
+                                      {"title": taskName.text, "id": dbref.id})
+                                });
+                        Navigator.pop(context);
                       },
                     ),
                   ],
